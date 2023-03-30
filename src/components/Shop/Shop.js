@@ -23,21 +23,15 @@ const Shop = () => {
     //     setCart(newCart)
     // }
 
-    // class =  6 - 7
-    const handleAddToCart = (product) => {
-        // console.log(product)
-        const newCart = [...cart, product]
-        setCart(newCart);
-
-        // class 51  --- 4 start -- 1
-        addToDb(product.id)
-    }
+  
 
     // class 51 ---  4 step --2
     useEffect(() => {
         const storedCart = getShoppingCart();
         // console.log(storedCart);
 
+        // CLASS 51 -7
+        const savedCart = [];
         // class 51 ---  5 video
         // step 1: get id 
         for(const id in storedCart){
@@ -45,11 +39,28 @@ const Shop = () => {
             const addedProduct = products.find(product => product.id === id);
 
             // set  3: get quantity of the product
+            // class number 51 - 6
+           if(addedProduct){
             const quantity = storedCart[id];
             addedProduct.quantity = quantity;
-            console.log(addedProduct);
+            // step 4: add the added product to the saved cart 
+             savedCart.push(addedProduct);
+           }
+            // console.log(addedProduct);
         }
-    }, [products])
+        // step 5: set the cart
+        setCart(savedCart)
+    }, [products]);
+
+      // class =  6 - 7
+      const handleAddToCart = (product) => {
+        // console.log(product)
+        const newCart = [...cart, product]
+        setCart(newCart);
+
+        // class 51  --- 4 start -- 1
+        addToDb(product.id)
+    }
 
     return (
         <div className='shop-container'>
